@@ -5,7 +5,7 @@ Created on Thu Jan 12 20:48:14 2023
 @author: linus
 """
 
-from iterate_over_DB_multi import iterate_over_database
+from iterate_over_DB import iterate_over_database
 if __name__ == '__main__':
     safe_object=[]
     database_dict={}
