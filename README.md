@@ -1,6 +1,6 @@
 # dorganalysis
 
-in the code folder you can see the .py-files, which build up the usable algorithms. the ipynb file is the code i used to gain information of the exel file as well creating the figures. 
+in the code folder you can see the .py-files, which build up the usable algorithms. Additional data contains the exel-file as result of the iteration over the Biomodels database, as well as a ipynb file to create meaningful figures.
 
 The following packages have to be installed: LibSBML, Graphbiz and Gurobi. Note that to handle large models, Gurobi has to be installed via the website instead of just by pip.
 
