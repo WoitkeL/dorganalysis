@@ -224,14 +224,15 @@ def draw_hasse(label_highlight_reaction_dict,dot,list_of_solutions,analyze, DOs=
         else:
             start="<"
             name= get_highlighted_text(name1,name2)
-            if name1==[] and name2==[]:
-                name="none"
+            
+            if list(name1)==[] and list(name2)==[]:
+                name="None"
             name=start+name    
         if prod_name and second_value==True:
                 name=name+" R: "+prod_name
         if start: name=name+"<br/>" 
         else: name=name+"\n"
-        
+            
         #handle species output
         if show_species:
             LOR_spec_dict={}
