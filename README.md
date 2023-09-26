@@ -1,6 +1,6 @@
-# dorganalysis
+# Introduction
 
-Dorganalyses is a tool to find all distributed organizations of a given reaction networks. A distributed organization is a 
+**Dorganalyses** is a tool to find all distributed organizations of a given reaction networks. A distributed organization is a 
 set of molecules (or, equivalently, a subnetwork) that can potentially persist forever [1]. The tool and the algorithms used by the toolare intrduced in Ref. [2].
 
 Deorganalysis is inplemented in python (`code` folder) and uses Gurobi for solving mixed linear integer problems. 
@@ -15,6 +15,10 @@ Additionaly to Python the following packages have to be installed:
 - Graphviz 
 - regex
 - Gurobi: Note that to handle large models, Gurobi has to be installed via the website with a fitting license instead of just by pip.
+
+# 
+
+# Example
 
 A step by step showcase of the most applications can be seen in the example.ipynb.
 
