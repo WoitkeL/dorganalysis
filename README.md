@@ -12,10 +12,14 @@ Scripts and results from applying the tool to models from the database BioModels
 ## Requirements
 Additionaly to Python the following packages have to be installed: 
 - LibSBML
-- Graphviz 
+- pip install python-libsbml
+- Graphviz
+- pip install graphviz
 - regex
+- pip install regex
 - Gurobi: Note that to handle large models, Gurobi has to be installed via the website with a fitting license instead of just by pip.
-
+simple version:
+pip install gurobipy
 # Download Dorganalysis
 
 
