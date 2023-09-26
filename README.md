@@ -37,6 +37,15 @@ Go to the `code` directory and open ` example.ipynb` using `Jupyter Notebook`.  
 
 Note that the computation of a particular model can take long (several hours or days). There are several timeouts to limit the compute time. See `model.params.TimeLimit`
 
+# Citation
+If you find the tool useful, please cite the acompanion paper:
+
+```
+Computing all persistent subspaces of a reaction-diffusion system, submitted, under review, 2023 
+
+```
+
+
 # References
 
 [1] Peter, S., Ibrahim, B., & Dittrich, P. (2021). Linking network structure and dynamics to describe the set of persistent species in reaction diffusion systems. SIAM Journal on Applied Dynamical Systems, 20(4), 2037-2076.
