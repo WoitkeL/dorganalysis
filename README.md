@@ -38,9 +38,7 @@ Note that the computation of a particular model can take long (several hours or 
 # Citation
 If you find the tool useful, please cite the companion paper:
 
-```
-Peter, S., Woitke, L., Dittrich, P., Ibrahim, B. (2023). Computing all persistent subspaces of a reaction-diffusion system, JOURNAL, submitted, under review
-```
+> Peter, S., Woitke, L., Dittrich, P., Ibrahim, B. (2023). Computing all persistent subspaces of a reaction-diffusion system, JOURNAL, submitted, under review
 
 
 # References
