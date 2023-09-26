@@ -14,7 +14,7 @@ Deorganalysis requires **python** (e.g., by using the annaconda framework) inclu
 - regex: `pip install regex`
 - Gurobi: `pip install gurobipy`
 
-Note that to handle large models, Gurobi has to be installed via the website with a fitting license instead of just by pip.
+To handle large models, Gurobi must be installed via the website with a fitting license instead of just installing it by pip.
 
 ## Download Dorganalysis
 
