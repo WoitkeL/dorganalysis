@@ -18,6 +18,9 @@ Additionaly to Python the following packages have to be installed:
 simple version: pip install gurobipy
 # Download Dorganalysis
 
+`git clone https://github.com/WoitkeL/dorganalysis`
+
+
 
 
 # Example
