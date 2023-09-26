@@ -1,12 +1,10 @@
 
 # Introduction
 
-**Dorganalyses** is a tool to find all distributed organizations of a given reaction networks. A distributed organization is a 
-set of molecules (or, equivalently, a subnetwork) that can potentially persist forever [1]. The tool and the algorithms used by the toolare intrduced in Ref. [2].
+**Dorganalyses** is a tool to find all distributed organizations of a given reaction networks [1]. A distributed organization is a 
+set of molecules (or, equivalently, a subnetwork) that can potentially persist forever [2]. 
 
-Deorganalysis is inplemented in python (`code` folder) and uses Gurobi for solving mixed linear integer problems. 
-
-Scripts and results from applying the tool to models from the database BioModels can be found in the directory `àppliance_Database`. 
+Deorganalysis is inplemented in python (`code` folder) and uses Gurobi for solving mixed linear integer problems.  
 
 # Installation
 
@@ -39,17 +37,16 @@ Go to the `code` directory and open ` example.ipynb` using `Jupyter Notebook`.  
 Note that the computation of a particular model can take long (several hours or days). There are several timeouts to limit the compute time. See `model.params.TimeLimit`
 
 # Citation
-If you find the tool useful, please cite the acompanion paper:
+If you find the tool useful, please cite the companion paper:
 
 ```
-Computing all persistent subspaces of a reaction-diffusion system, submitted, under review, 2023 
-
+Peter, S., Woitke, L., Dittrich, P., Ibrahim, B. (2023). Computing all persistent subspaces of a reaction-diffusion system, JOURNAL, submitted, under review
 ```
 
 
 # References
 
-[1] Peter, S., Ibrahim, B., & Dittrich, P. (2021). Linking network structure and dynamics to describe the set of persistent species in reaction diffusion systems. SIAM Journal on Applied Dynamical Systems, 20(4), 2037-2076.
+[1] Peter, S., Woitke, L., Dittrich, P., Ibrahim, B. (2023). Computing all persistent subspaces of a reaction-diffusion system, JOURNAL, submitted, under review
 
-[2] Computing all persistent subspaces of a reaction-diffusion system, submitted, under review, 2023 
+[2] Peter, S., Ibrahim, B., & Dittrich, P. (2021). Linking network structure and dynamics to describe the set of persistent species in reaction diffusion systems. SIAM Journal on Applied Dynamical Systems, 20(4), 2037-2076.
 
