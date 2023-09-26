@@ -26,7 +26,7 @@ To handle large models, Gurobi must be installed via the website with a fitting 
 
 # Example
 
-Go to the `code` directory and open ` example.ipynb` using `Jupyter Notebook`.  It contains a step by step walkthrough of a typical analysis.
+Go to the `code` directory and open ` example.ipynb` using `Jupyter Notebook`.  The notebook contains a step by step walkthrough of a typical analysis.
 
 # Analysis of BioModels
 
