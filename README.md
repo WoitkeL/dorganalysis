@@ -30,6 +30,13 @@ Note that to handle large models, Gurobi has to be installed via the website wit
 
 Go to the `code` directory and open ` example.ipynb` using `Jupyter Notebook`.  It contains a step by step walkthrough of a typical analysis.
 
+# Analysis of models from BioModels
+
+1. Download models from BioModels and place them in a dedicated directory.
+1. Change the path in `make_biomodels_csv.py` to that directory and run the script.
+
+Note that the computation of a particular model can take long (several hours or days). There are several timeouts to limit the compute time. See `model.params.TimeLimit`
+
 # References
 
 [1] Peter, S., Ibrahim, B., & Dittrich, P. (2021). Linking network structure and dynamics to describe the set of persistent species in reaction diffusion systems. SIAM Journal on Applied Dynamical Systems, 20(4), 2037-2076.
