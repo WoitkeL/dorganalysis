@@ -3,8 +3,6 @@
 Dorganalyses is a tool to find all distributed organizations of a given reaction networks. A distributed organization is a 
 set of molecules (or, equivalently, a subnetwork) that can potenitially persist forever [1]. The tool and the algorithms used by the toolare intrduced in Ref. [2].
 
-
-
 in the code folder you can see the .py-files, which build up the usable algorithms. 
 
 Additional data contains the exel-file as result of the iteration over the Biomodels database, as well as a ipynb file to create meaningful figures.
