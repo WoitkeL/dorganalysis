@@ -7,13 +7,14 @@ Deorganalysis is inplemented in python (`code` folder) and uses Gurobi for solvi
 
 Scripts and results from applying the tool to models from the database BioModels can be found in the directory `àppliance_Database`. 
 
-Additional data contains the exel-file as result of the iteration over the Biomodels database, as well as a ipynb file to create meaningful figures.
+# Installation
 
-The following packages have to be installed: 
--LibSBML
--Graphviz 
--regex
--Gurobi: Note that to handle large models, Gurobi has to be installed via the website with a fitting license instead of just by pip.
+## Requirements
+Additionaly to Python the following packages have to be installed: 
+- LibSBML
+- Graphviz 
+- regex
+- Gurobi: Note that to handle large models, Gurobi has to be installed via the website with a fitting license instead of just by pip.
 
 A step by step showcase of the most applications can be seen in the example.ipynb.
 
