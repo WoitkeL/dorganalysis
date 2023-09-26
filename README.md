@@ -10,7 +10,6 @@ Scripts and results from applying the tool to models from the database BioModels
 # Installation
 
 ## Requirements
-
 Deorganalysis requires **python** and the following packages: 
 - LibSBML: `pip install python-libsbml`
 - Graphviz: `pip install graphviz`
