@@ -10,7 +10,7 @@ Scripts and results from applying the tool to models from the database BioModels
 # Installation
 
 ## Requirements
-Deorganalysis requires **python** (e.g., by using the annaconda framework) including **Juypter Notebook** and the following packages: 
+Deorganalysis requires **python** (e.g., by using the annaconda framework) including **Jupyter Notebook** and the following packages: 
 - LibSBML: `pip install python-libsbml`
 - Graphviz: `pip install graphviz`
 - regex: `pip install regex`
@@ -28,7 +28,7 @@ Note that to handle large models, Gurobi has to be installed via the website wit
 
 # Example
 
-A step by step showcase of the most applications can be seen in the example.ipynb.
+Go to the `code` directory and open ` example.ipynb` using `Jupyter Notebook`.  It contains a step by step walkthrough of a typical analysis.
 
 # References
 
