@@ -5,7 +5,7 @@ set of molecules (or, equivalently, a subnetwork) that can potentially persist f
 
 Deorganalysis is inplemented in python (`code` folder) and uses Gurobi for solving mixed linear integer problems. 
 
-Scripts and results from applying the tool to models from the database BioModels can be found in the directory `àpplience_Database`. 
+Scripts and results from applying the tool to models from the database BioModels can be found in the directory `àppliance_Database`. 
 
 Additional data contains the exel-file as result of the iteration over the Biomodels database, as well as a ipynb file to create meaningful figures.
 
