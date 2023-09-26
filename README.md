@@ -10,6 +10,7 @@ Scripts and results from applying the tool to models from the database BioModels
 # Installation
 
 ## Requirements
+
 Additionaly to Python the following packages have to be installed: 
 - LibSBML: `pip install python-libsbml`
 - Graphviz: `pip install graphviz`
