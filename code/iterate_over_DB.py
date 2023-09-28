@@ -9,35 +9,38 @@ import os
 import time
 import csv
 from Hasse import check_ORG_LOR,create_Hasse
-from dorganalysis import Analysis
+from Analysis import Analysis
 from reactionnetwork import create_closures, SBML_to_RN
-
+from LP_compartments import get_min_compartments,get_MCs
 
 def calculate_os(analyze):
     orgs=0
-    print(analyze.SOR_map)
     for i in range(len(analyze.DOs)):
-        print(analyze.DOs[i])
-        print(analyze.SOR_map[analyze.DOs[i]])
-        if is_DO_O(analyze.reaction_network,analyze.DOs[i],analyze.SOR_map[analyze.DOs[i]][0]):
+        if is_DO_O(analyze,i):
             orgs+=1
     return(orgs)
-def is_DO_O(RN,DO,SOR):
-    SOR2=set()
-    for rea in RN.reactions:
-        if set(rea.listOfReactants).issubset(DO):
-            SOR2.add(rea.defined_name)
-    if SOR==SOR2:
-        return(True)
-    else:
-        return(False)
+
+def is_DO_O(analyze,i):
+    
+    for rea in analyze.reaction_network.reactions:
+        if rea.defined_name not in analyze.SOR_map[analyze.DOs[i]][-1]:
+            if set(rea.listOfReactants).issubset(analyze.DOs[i]):
+                return(False)
+    return(True)
+    
     
 def iterate_over_database(path="C:/Users/linus/python/nice_BM2/", start_index=0,end_index=3000, exelname=False):
-    print(globals())
-   
-    header = ['ID',"name",'number_species', 'number_reactions', 'termination','number_SORs',\
-              'number_SOR_O', "number_SOR_DO_only","number_DO","number_Os","number_reak_DO","numbero",\
-                  "Timer_ERC","Timer_LP","Timer_LP_DO1","Timer_LP_DO2","number_constr","timer_all1","timer_all2","timer_all3"]
+    
+    header = ['ID',"name",'number_species', 'number_reactions', 'number_SORs',\
+              'number_SOR_O', "number_SOR_DO_only","number_DO","number_Os",\
+                  "max_MRC","comp2","comp3","comp4","comp5","comp6","timer_MRC","reaction_orders",\
+                  "Timer_ERC","Timer_LP","Timer_LP_DO1","number_constr","time_complete"]
+    more_timers=False
+    if more_timers:
+        header = ['ID',"name",'number_species', 'number_reactions', 'number_SORs',\
+              'number_SOR_O', "number_SOR_DO_only","number_DO","number_Os",\
+                  "max_MRC","comp2","comp3","comp4","comp5","comp6","timer_MRC","reaction_orders",\
+                  "Timer_ERC","Timer_LP","Timer_LP_DO1","number_constr","timer_all1","timer_all2","timer_all3","timer_all4"]
     if exelname:
         exel_insert=str(exelname)
     else:
@@ -52,7 +55,10 @@ def iterate_over_database(path="C:/Users/linus/python/nice_BM2/", start_index=0,
         writer_csv.writerow(header)
         
         current_index=-1
-        dead_entries=[560,595,909,908]
+        dead_entries=[560,595,909,908,1061]
+        dead_entries=[]
+        #only_entries=[496,497,255,560,595,909,908,1061]
+        #only_entries=[496,497,255,1061]
         for entry in sbml_folder:
             #skips files before reaching start_index
             if start_index-1 >current_index:
@@ -61,6 +67,13 @@ def iterate_over_database(path="C:/Users/linus/python/nice_BM2/", start_index=0,
             for i in dead_entries:
                 if entry.name.endswith(str(i)+".xml"):
                     continue
+            run=0
+            #for i in only_entries:
+            #    if entry.name.endswith(str(i)+".xml"):
+            #        run=1
+            #        break
+            #if not run:
+            #    continue
             
             if end_index <=current_index:
                 break
@@ -79,19 +92,33 @@ def iterate_over_database(path="C:/Users/linus/python/nice_BM2/", start_index=0,
     
 
 def calculate_RN(input_list):
+    more_timers=False
     entry,current_index=input_list
+    print(current_index)
     RN=SBML_to_RN(str(entry))
+    numbers_array=[0,0,0,0,0,0,0,0,0]
+    for ele in RN.reactions:
+        numbers=len(ele.listOfReactants)
+        try:
+            numbers_array[numbers]+=1
+        except IndexError:
+            numbers_array=numbers
+            break
+    
+    RN.replace_inflow_by_selfreplication()
     current_SBML=Analysis(RN)
-    timeout_counter=0
     #call of analysis 
     global database_dict
     if current_SBML.reaction_network is None:
         print(entry)
         return()
     
+    
+    #insert basic data    
+    outputdict={}    
+    outputdict["reaction_orders"]=numbers_array
     timer_all=time.time()
-    #insert basic data
-    outputdict={}
+    
     outputdict['ID']=os.path.basename(entry)
     outputdict['name']=current_SBML.name
     
@@ -123,43 +150,101 @@ def calculate_RN(input_list):
     outputdict["Timer_ERC"]=str(current_SBML.metadata["Time_ERC"]).replace('.',',')
     outputdict["Timer_LP"]=str(current_SBML.metadata["Timer_LP"]).replace('.',',')
       
-    outputdict["timer_all1"]=str(time.time()-timer_all).replace('.',',')    
+      
     
-    dos_alter=set()
-    start_DO2_time=time.process_time()
-    try:
-        
-        for ele in current_SBML.SORs:
-            dos_alter.update(tuple(current_SBML.get_DOs_of_SOR(ele)))
-        outputdict["numbero"]=len(dos_alter)
-    except:
-        outputdict["numbero"]="error"
-        #dos_alter.update(get_DOs_of_SOR(current_SBML.reaction_network, ele))
+    start_MRC=time.time()
+    cancel_mrc=False
+    get_comp=True
+    compartment_2=0
+    compartment_3=0
+    compartment_4=0
+    compartment_5=0
+    compartment_6=0
+    maxnumbercomp=0
+    timer1=str(time.time()-timer_all).replace('.',',')  
     
-    outputdict["timer_all2"]=str(time.time()-timer_all).replace('.',',')    
-    outputdict["Timer_LP_DO2"]=str(time.process_time()-start_DO2_time).replace('.',',')
-    outputdict["numbero"]=len(dos_alter)
+    if get_comp==True:
+        for i in range(len(current_SBML.SORs)):
+            if not check_ORG_LOR(current_SBML.SORs[i],current_SBML.reaction_network):
+                if current_SBML.SORs[i][0]:
+                    compartments=[]
+                    try:
+                        solution_gc=get_MCs(current_SBML.reaction_network,current_SBML.SORs[i])
+                        maxnumbercomp=max(maxnumbercomp,len(solution_gc))
+                        compartments=get_min_compartments(current_SBML.reaction_network, solution_gc, current_SBML.SORs[i])
+                    except MemoryError:
+                        cancel_mrc=True
+                        break
+
+                    #compartments=get_min_compartments(current_SBML.reaction_network, solution_gc, current_SBML.SORs[i])
+                else: compartments=[]
+                #if len(compartments)>2:
+                 #   compartment_counter.append([i,len(compartments)])
+                if len(compartments)==2:
+                    compartment_2+=1
+                if len(compartments)==3:
+                    compartment_3+=1
+                if len(compartments)==4:
+                    compartment_4+=1
+                if len(compartments)==5:
+                    compartment_5+=1
+                if len(compartments)>5:
+                    compartment_6+=1
+            
+                if int(time.time()-start_MRC)>300:
+                    cancel_mrc=True
+                    print("cANCELA")
+                    break
+        if cancel_mrc:   
+            outputdict["timer_MRC"]="timeout"
+        else:
+            outputdict["timer_MRC"]=str(time.time()-start_MRC).replace('.',',')
+
+
+
+        outputdict["max_MRC"]=maxnumbercomp
+        outputdict["comp2"]=compartment_2
+        outputdict["comp3"]=compartment_3
+        outputdict["comp4"]=compartment_4
+        outputdict["comp5"]=compartment_5
+        outputdict["comp6"]=compartment_6
+    else:
+    #outputdict["compartment_lengths"]=compartment_counter
+        outputdict["max_MRC"]=""
+        outputdict["comp2"]=""
+        outputdict["comp3"]=""
+        outputdict["comp4"]=""
+        outputdict["comp5"]=""
+        outputdict["comp6"]=""
+        outputdict["timer_MRC"]=""
+    timer2=str(time.time()-timer_all).replace('.',',')  
+    #outputdict["Timer_LP_DO2"]=str(time.process_time()-start_DO2_time).replace('.',',')
+    
+    
     current_SBML.all_DOs()
-    
+    timer3=str(time.time()-timer_all).replace('.',',')
     outputdict["Timer_LP_DO1"]=str(current_SBML.metadata["Timer_LP"]).replace('.',',')
+    
     Os=calculate_os(current_SBML)
 
     outputdict["number_Os"]=Os
     outputdict["number_DO"]=len(current_SBML.DOs)
-    
-    if hasattr(current_SBML,"SORs_wrong"):
-        outputdict['termination']=current_SBML.SORs_wrong
-        timeout_counter=1
+      
+    #if hasattr(current_SBML,"SORs_wrong"):
+     #   outputdict['termination']=current_SBML.SORs_wrong
+      #  timeout_counter=1
  
-    if timeout_counter!=0:
-        try:
-            if hasattr(current_SBML, "info_so_far"):
-                outputdict["number_SOR_O"]=current_SBML.info_so_far[0]
-                outputdict["number_SOR_DO_only"]=current_SBML.info_so_far[1]
-        except KeyError:
-            pass
-    outputdict["timer_all3"]=str(time.time()-timer_all).replace('.',',')
-    
+    if more_timers:
+        
+        outputdict["timer_all1"]=timer1
+        
+        outputdict["timer_all2"]=timer2
+        
+        outputdict["timer_all3"]=timer3
+        outputdict["timer_all4"]=str(time.time()-timer_all).replace('.',',')
+    else:
+        outputdict["time_complete"]=str(time.time()-timer_all).replace('.',',')
+        
     return outputdict
     
 
@@ -252,7 +337,6 @@ def calculate_number_DO(listofSpecies,SORs,LOR):
                         new_map[ele].append(species_of_SORs[solution_index])
                     print()
         else:
-            #combi_spec+=1
             combi_spec.append(ele)
     print(new_map)
     print(combi_spec)
