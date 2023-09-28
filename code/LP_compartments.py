@@ -203,6 +203,7 @@ def get_min_compartments(RN, MCs, SOR, setOfSpecies_input=""):
     #solve_min_comp=pulp.LpProblem("Solver Min Compartment",pulp.LpMinimize)
     model.setObjective(gp.quicksum(compartments.values()), gp.GRB.MINIMIZE)
     model.setParam( 'OutputFlag', False )
+    model.params.TimeLimit = 300
     #objective_function=pulp.lpSum(compartments.values())  
     #solve_min_comp+=objective_function  
     
@@ -220,7 +221,9 @@ def get_min_compartments(RN, MCs, SOR, setOfSpecies_input=""):
     else:
         print("infeasible")
         print(model.status)
-        return()        
+        return()     
+    if model.status == gp.GRB.TIME_LIMIT:
+        return()
     #variable extraction and output
     solutionlist=[]
     species_over_list=[]
