@@ -235,11 +235,8 @@ def draw_hasse(label_highlight_reaction_dict,dot,list_of_solutions,analyze,label
             if not hasattr(analyze,"overproduction"):
                 analyze.overproduction=analyze.get_ops()
                 
-            print("UHG")
-            print(analyze.overproduction[i])
-            print(label_highlight_overproduction_dict[i])
+            
             name_op=get_highlighted_text(label_highlight_overproduction_dict[i],analyze.overproduction[i])
-            print(name_op)
             #op=','.join(map(str,analyze.overproduction[i]))
             if name_op:
                 name=name+" OP: "+name_op
